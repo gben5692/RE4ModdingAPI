@@ -153,7 +153,7 @@ public static class Player
     /// <summary>
     /// If the player is in a animation (Grabbing)
     /// </summary>
-    public static bool IsJacked => PlayerRefs.TargetJacked;
+    public static bool IsTargetJacked => PlayerRefs.TargetJacked;
 
 #region Methods
 

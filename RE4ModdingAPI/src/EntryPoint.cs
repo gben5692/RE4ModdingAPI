@@ -1,6 +1,4 @@
-﻿using RE4ModdingAPI.DataTypes;
-using RE4ModdingAPI.Loader;
-using RE4ModdingAPI.Wrappers;
+﻿using RE4ModdingAPI.Loader;
 using REFrameworkNET;
 using REFrameworkNET.Attributes;
 using REFrameworkNET.Callbacks;
@@ -17,11 +15,11 @@ public class EntryPoint
     {
         API.LogToConsole = true;
         API.LogInfo("Plugin Loaded!");
-
+        
         OnStart();
     }
 
-    [Callback(typeof(UpdateBehavior), CallbackType.Pre)]
+    [Callback(typeof(UpdateBehavior), CallbackType.Post)]
     private static void UpdateCallback()
     {
         OnUpdate(Application.DeltaTime);
@@ -37,16 +35,33 @@ public class EntryPoint
     public static void OnStart()
     {
         API.LogInfo("start called!");
+        modLoader = new();
+        modLoader.LoadPlugins();
     }
 
     public static void OnUpdate(float deltaTime)
     {
-        API.LogInfo("update called!");
-        Player.Transform.Rotation *= Quaternion3.FromEuler(new(1,1,1)) ;
+        try
+        {
+            foreach (var plugin in modLoader.LoadedPlugins)
+            {
+                plugin.OnUpdate(deltaTime);
+            }
+        }
+        catch (Exception ex)
+        {
+            API.LogError($"An exception has occured while calling OnUpdate for plugins with the error: {ex}");
+        }
     }
 
     public static void OnDisabled()
     {
+        foreach (var plugin in modLoader.LoadedPlugins)
+        {
+            plugin.OnDisabled();
+        }
+
+        modLoader.UnloadPlugins();
         API.LogInfo("disabled called!");
     }
 }
