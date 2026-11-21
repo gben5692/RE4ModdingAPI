@@ -10,7 +10,7 @@ REFramework makes it difficult to subscribe to events and hook internal game met
 ### Creating a Mod
 1. Create a new C# Class Library project targeting **.NET 10**.
 2. Add references to `RE4ModdingAPI.dll` and the required DLLs from the `Libraries` folder.
-3. Check out the `Examples` folder to see how to implement `OnEnabled` and `OnUpdate`.
+3. Check out the `Examples` folder to see how to implement `OnEnabled` and `OnUpdate` etc.
 4. Build your project and drop your compiled mod `.dll` into `reframework/plugins/managed/`.
 
 
