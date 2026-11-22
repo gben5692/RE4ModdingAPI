@@ -11,12 +11,11 @@ public static class Player
 {
 #region Internal References
     private static CharacterContext PlayerRefs => Singleton.CharacterManager.getPlayerContextRef();
-
 #endregion
 
 #region Events
 
-    public static event RE4Event<OnHealthChangedEvent>? HealthChanged;
+    public static event RE4Event<OnHealthChangedEvent> HealthChanged;
 
 #endregion
 
@@ -25,13 +24,7 @@ public static class Player
     /// <summary>
     /// The transform component
     /// </summary>
-    public static Transform Transform
-    {
-        get
-        {
-            return new(PlayerRefs.BodyGameObject.Transform);
-        }
-    }
+    public static Transform Transform => new(PlayerRefs.BodyGameObject.Transform);
 
     /// <summary>
     /// The character controller component
@@ -40,19 +33,17 @@ public static class Player
 
 #endregion
 
+#region Properties
+
+    public static Inventory Inventory {get;} = new();
+
     /// <summary>
     /// The max health of the player
     /// </summary>
     public static int MaxHealth
     {
-        get
-        {
-            return PlayerRefs.HitPoint.DefaultHitPoint;
-        }
-        set
-        {
-            PlayerRefs.HitPoint.DefaultHitPoint = value;
-        }
+        get => PlayerRefs.HitPoint.DefaultHitPoint;
+        set => PlayerRefs.HitPoint.DefaultHitPoint = value;
     }
 
     /// <summary>
@@ -65,14 +56,8 @@ public static class Player
     /// </summary>
     public static int Health 
     {
-        get
-        {
-            return PlayerRefs.HitPoint.CurrentHitPoint;
-        }
-        set
-        {
-            PlayerRefs.HitPoint.CurrentHitPoint = value;
-        }
+        get => PlayerRefs.HitPoint.CurrentHitPoint;
+        set => PlayerRefs.HitPoint.CurrentHitPoint = value;
     }
 
     /// <summary>
@@ -80,14 +65,8 @@ public static class Player
     /// </summary>
     public static bool IsImmortal
     {
-        get
-        {
-            return PlayerRefs.HitPoint.Immortal;
-        }
-        set
-        {
-            PlayerRefs.HitPoint.Immortal = value;
-        }
+        get => PlayerRefs.HitPoint.Immortal;
+        set => PlayerRefs.HitPoint.Immortal = value;
     }
 
     /// <summary>
@@ -95,14 +74,8 @@ public static class Player
     /// </summary>
     public static bool IsInvincible
     {
-        get
-        {
-            return PlayerRefs.HitPoint.Invincible;
-        }
-        set
-        {
-            PlayerRefs.HitPoint.Invincible = value;
-        }
+        get => PlayerRefs.HitPoint.Invincible;
+        set => PlayerRefs.HitPoint.Invincible = value;
     }
 
     /// <summary>
@@ -125,14 +98,8 @@ public static class Player
     /// </summary>
     public static float MoveSpeed 
     {
-        get
-        {
-            return PlayerRefs.MoveIntensity;
-        }
-        set
-        {
-            PlayerRefs.MoveIntensity = value;
-        }
+        get => PlayerRefs.MoveIntensity;
+        set => PlayerRefs.MoveIntensity = value;
     }
 
     /// <summary>
@@ -140,20 +107,16 @@ public static class Player
     /// </summary>
     public static float LookSpeed
     {
-        get
-        {
-            return PlayerRefs.WatchIntensity;
-        }
-        set
-        {
-            PlayerRefs.WatchIntensity = value;
-        }
+        get => PlayerRefs.WatchIntensity;
+        set => PlayerRefs.WatchIntensity = value;
     }
 
     /// <summary>
     /// If the player is in a animation (Grabbing)
     /// </summary>
     public static bool IsTargetJacked => PlayerRefs.TargetJacked;
+
+#endregion
 
 #region Methods
 
