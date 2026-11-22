@@ -15,7 +15,7 @@ public static class Player
 
 #region Events
 
-    public static event RE4Event<OnHealthChangedEvent> HealthChanged;
+    public static event RE4Event<HealthChangedEvent> HealthChanged;
 
 #endregion
 
@@ -131,6 +131,27 @@ public static class Player
         Transform.Rotation = rotation;
 
         CharacterController.warp();
+    }
+
+#endregion
+
+#region EventMethods
+    // not finished
+
+    private static int previousHealth = 0;
+    public static void HealthChangedMethodHandler()
+    {
+        if (previousHealth != PlayerRefs.HitPoint.CurrentHitPoint)
+        {
+            previousHealth = PlayerRefs.HitPoint.CurrentHitPoint;
+        }
+
+        if (PlayerRefs.HitPoint.IsHPChanged)
+        {
+            HealthChanged?.Invoke(new(previousHealth, PlayerRefs.HitPoint.CurrentHitPoint));
+        }
+
+        previousHealth = PlayerRefs.HitPoint.CurrentHitPoint;
     }
 
 #endregion

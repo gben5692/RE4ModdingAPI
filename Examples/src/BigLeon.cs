@@ -1,4 +1,5 @@
 using RE4ModdingAPI;
+using RE4ModdingAPI.Events.Player;
 using RE4ModdingAPI.Wrappers;
 using REFrameworkNET;
 
@@ -10,8 +11,13 @@ public class BigLeon : Plugin
 
     public override void OnEnabled() // this runs once when it is loaded 
     {
-        API.LogInfo($"Leon scale: {Player.Transform!.Scale}:x:y:z");
-        Player.Transform.LocalScale = new(10, 1, 1);
+        API.LogInfo($"Leon org scale: x:{Player.Transform.LocalScale.X}, y:{Player.Transform.LocalScale.Y}, z:{Player.Transform!.LocalScale.X}");
+        Player.Transform.LocalScale = new(2, 2, 2);
+        Player.HealthChanged += OnHealthChanged;
+    }
+
+    private void OnHealthChanged(HealthChangedEvent ev)
+    {
     }
 
     public override void OnUpdate(float deltaTime) // this runs every frame
@@ -20,5 +26,6 @@ public class BigLeon : Plugin
 
     public override void OnDisabled() // this runs once the API is being disabled
     {
+        Player.Transform.LocalScale = new(1,1,1);
     }
 }

@@ -1,6 +1,6 @@
 namespace RE4ModdingAPI.Events.Player;
 
-public class OnHealthChangedEvent
+public readonly record struct HealthChangedEvent(int PreviousHealth, int CurrentHealth)
 {
-    
+
 }
