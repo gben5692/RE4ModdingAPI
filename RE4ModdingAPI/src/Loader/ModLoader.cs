@@ -27,12 +27,12 @@ internal class ModLoader // this class will handle loading plugins from a folder
 
                     foreach (var type in loadedAssembly.GetTypes())
                     {
-                        if (type.IsSubclassOf(typeof(Plugin)) && !type.IsAbstract && !type.IsInterface)
+                        if (type.IsSubclassOf(typeof(Plugin)) && type.IsClass)
                         {
-                            Plugin plugin = (Plugin)Activator.CreateInstance(type);
-                            LoadedPlugins.Add(plugin);
+                            Plugin? plugin = (Plugin?)Activator.CreateInstance(type);
+                            LoadedPlugins.Add(plugin!);
 
-                            API.LogInfo($"Loaded Plugin: {plugin.Name}, by: {plugin.Author}, v{plugin.Version}");
+                            API.LogInfo($"Loaded Plugin: {plugin!.Name}, by: {plugin!.Author}, v{plugin!.Version}");
 
                             plugin.OnEnabled();
                         }

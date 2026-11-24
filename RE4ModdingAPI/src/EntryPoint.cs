@@ -6,7 +6,7 @@ using via;
 
 namespace RE4ModdingAPI;
 
-public class EntryPoint
+internal class EntryPoint
 {
     private static ModLoader? modLoader;
     
@@ -43,7 +43,7 @@ public class EntryPoint
     {
         try
         {
-            foreach (var plugin in modLoader.LoadedPlugins)
+            foreach (var plugin in modLoader!.LoadedPlugins!)
             {
                 plugin.OnUpdate(deltaTime);
             }
@@ -56,12 +56,20 @@ public class EntryPoint
 
     public static void OnDisabled()
     {
-        foreach (var plugin in modLoader.LoadedPlugins)
+        try
         {
-            plugin.OnDisabled();
+            foreach (var plugin in modLoader!.LoadedPlugins!)
+            {
+                plugin.OnDisabled();
+            }
         }
+        catch (Exception ex)
+        {
+            API.LogError($"Error in trying to call OnDisabled with the error: {ex}");
+        }
+        
 
-        modLoader.UnloadPlugins();
+        modLoader!.UnloadPlugins();
         API.LogInfo("disabled called!");
     }
 }

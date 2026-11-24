@@ -24,12 +24,30 @@ public static class Player
     /// <summary>
     /// The transform component
     /// </summary>
-    public static Transform Transform => new(PlayerRefs.BodyGameObject.Transform);
+    public static Transform Transform
+    {
+        get
+        {
+            if (PlayerRefs == null || PlayerRefs.BodyGameObject == null || PlayerRefs.BodyGameObject.Transform == null)
+            return Transform.Identity();
+
+            return new Transform(PlayerRefs.BodyGameObject.Transform);
+        }
+    }
 
     /// <summary>
     /// The character controller component
     /// </summary>
-    public static CharacterController CharacterController => PlayerRefs.BodyUpdater.CharacterController;
+    public static CharacterController CharacterController
+    {
+        get
+        {
+            if (PlayerRefs == null || PlayerRefs.BodyUpdater == null || PlayerRefs.BodyUpdater.CharacterController == null)
+            return null;
+
+            return PlayerRefs.BodyUpdater.CharacterController;
+        }
+    }
 
 #endregion
 
@@ -42,22 +60,41 @@ public static class Player
     /// </summary>
     public static int MaxHealth
     {
-        get => PlayerRefs.HitPoint.DefaultHitPoint;
-        set => PlayerRefs.HitPoint.DefaultHitPoint = value;
-    }
+        get
+        {
+            if (PlayerRefs == null || PlayerRefs.HitPoint == null)
+            return 0;
 
-    /// <summary>
-    /// The health in percentage
-    /// </summary>
-    public static float HealthPercentage => (float)Health / MaxHealth;
+            return PlayerRefs.HitPoint.DefaultHitPoint;
+        }
+        set
+        {
+            if (PlayerRefs == null || PlayerRefs.HitPoint == null)
+            return;
+
+            PlayerRefs.HitPoint.DefaultHitPoint = value;
+        }
+    }
 
     /// <summary>
     /// This is current health of the player
     /// </summary>
     public static int Health 
     {
-        get => PlayerRefs.HitPoint.CurrentHitPoint;
-        set => PlayerRefs.HitPoint.CurrentHitPoint = value;
+        get
+        {
+            if (PlayerRefs == null || PlayerRefs.HitPoint == null)
+            return 0;
+
+            return PlayerRefs.HitPoint.CurrentHitPoint;
+        }
+        set
+        {
+            if (PlayerRefs == null || PlayerRefs.HitPoint == null)
+            return;
+
+            PlayerRefs.HitPoint.CurrentHitPoint = value;
+        }
     }
 
     /// <summary>
@@ -65,8 +102,20 @@ public static class Player
     /// </summary>
     public static bool IsImmortal
     {
-        get => PlayerRefs.HitPoint.Immortal;
-        set => PlayerRefs.HitPoint.Immortal = value;
+        get
+        {
+            if (PlayerRefs == null || PlayerRefs.HitPoint == null)
+            return false;
+
+            return PlayerRefs.HitPoint.Immortal;
+        }
+        set
+        {
+            if (PlayerRefs == null || PlayerRefs.HitPoint == null)
+            return;
+
+            PlayerRefs.HitPoint.Immortal = value;
+        }
     }
 
     /// <summary>
@@ -74,47 +123,119 @@ public static class Player
     /// </summary>
     public static bool IsInvincible
     {
-        get => PlayerRefs.HitPoint.Invincible;
-        set => PlayerRefs.HitPoint.Invincible = value;
+        get
+        {
+            if (PlayerRefs == null || PlayerRefs.HitPoint == null)
+            return false;
+
+            return PlayerRefs.HitPoint.Invincible;
+        }
+        set
+        {
+            if (PlayerRefs == null || PlayerRefs.HitPoint == null)
+            return;
+
+            PlayerRefs.HitPoint.Invincible = value;
+        }
     }
 
     /// <summary>
     /// If the player is dead
     /// </summary>
-    public static bool IsDead => PlayerRefs.HitPoint.IsDead;
+    public static bool IsDead
+    {
+        get
+        {
+            if (PlayerRefs == null || PlayerRefs.HitPoint == null)
+            return false;
+
+            return PlayerRefs.HitPoint.IsDead;
+        }
+    }
 
     /// <summary>
     /// If the player is changing costume
     /// </summary>
-    public static bool IsCostumeChanging => PlayerRefs.IsCostumeChanging;
+    public static bool IsCostumeChanging
+    {
+        get
+        {
+            if (PlayerRefs == null)
+            return false;
+
+            return PlayerRefs.IsCostumeChanging;
+        }
+    }
 
     /// <summary>
     /// If the player is eliminated
     /// </summary>
-    public static bool IsEliminated => PlayerRefs.IsEliminated;
+    public static bool IsEliminated
+    {
+        get
+        {
+            if (PlayerRefs == null)
+            return false;
+
+            return PlayerRefs.IsEliminated;
+        }
+    }
 
     /// <summary>
     /// The player movement speed
     /// </summary>
-    public static float MoveSpeed 
+    public static float MoveIntensity
     {
-        get => PlayerRefs.MoveIntensity;
-        set => PlayerRefs.MoveIntensity = value;
+        get
+        {
+            if (PlayerRefs == null)
+            return 0f;
+            
+            return PlayerRefs.MoveIntensity;
+        }
+        set
+        {
+            if (PlayerRefs == null)
+            return;
+
+            PlayerRefs.MoveIntensity = value;
+        }
     }
 
     /// <summary>
     /// The look speed (Head)
     /// </summary>
-    public static float LookSpeed
+    public static float WatchIntensity
     {
-        get => PlayerRefs.WatchIntensity;
-        set => PlayerRefs.WatchIntensity = value;
+        get
+        {
+            if (PlayerRefs == null)
+            return 0f;
+            
+            return PlayerRefs.WatchIntensity;
+        }
+        set
+        {
+            if (PlayerRefs == null)
+            return;
+
+            PlayerRefs.WatchIntensity = value;
+        }
     }
 
     /// <summary>
     /// If the player is in a animation (Grabbing)
     /// </summary>
-    public static bool IsTargetJacked => PlayerRefs.TargetJacked;
+    public static bool IsTargetJacked
+    {
+        get
+        {
+            if (PlayerRefs == null)
+            return false;
+
+            return PlayerRefs.TargetJacked;
+        }
+    }
 
 #endregion
 
@@ -127,6 +248,9 @@ public static class Player
     /// <param name="rotation">The rotation</param>
     public static void Teleport(Vector3 position, Quaternion3 rotation)
     {
+        if (Transform == null || CharacterController == null)
+        return;
+
         Transform.Position = position;
         Transform.Rotation = rotation;
 
