@@ -1,5 +1,7 @@
 using chainsaw;
 using REFrameworkNET;
+using via.hid;
+using via.wwiselib;
 
 namespace RE4ModdingAPI;
 

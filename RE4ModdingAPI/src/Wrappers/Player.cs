@@ -11,11 +11,12 @@ public static class Player
 {
 #region Internal References
     private static CharacterContext PlayerRefs => Singleton.CharacterManager.getPlayerContextRef();
+    private static PlayerManager PlayerManager => Singleton.PlayerManager;
 #endregion
 
 #region Events
 
-    public static event RE4Event<HealthChangedEvent> HealthChanged;
+    // public static event RE4Event<HealthChangedEvent> HealthChanged;
 
 #endregion
 
@@ -38,14 +39,14 @@ public static class Player
     /// <summary>
     /// The character controller component
     /// </summary>
-    public static CharacterController CharacterController
+    public static GameObject.CharacterController CharacterController
     {
         get
         {
             if (PlayerRefs == null || PlayerRefs.BodyUpdater == null || PlayerRefs.BodyUpdater.CharacterController == null)
             return null;
 
-            return PlayerRefs.BodyUpdater.CharacterController;
+            return new(PlayerRefs.BodyUpdater.CharacterController);
         }
     }
 
@@ -254,7 +255,7 @@ public static class Player
         Transform.Position = position;
         Transform.Rotation = rotation;
 
-        CharacterController.warp();
+        CharacterController.Warp();
     }
 
 #endregion
@@ -262,21 +263,21 @@ public static class Player
 #region EventMethods
     // not finished
 
-    private static int previousHealth = 0;
-    public static void HealthChangedMethodHandler()
-    {
-        if (previousHealth != PlayerRefs.HitPoint.CurrentHitPoint)
-        {
-            previousHealth = PlayerRefs.HitPoint.CurrentHitPoint;
-        }
+    // private static int previousHealth = 0;
+    // public static void HealthChangedMethodHandler()
+    // {
+    //     if (previousHealth != PlayerRefs.HitPoint.CurrentHitPoint)
+    //     {
+    //         previousHealth = PlayerRefs.HitPoint.CurrentHitPoint;
+    //     }
 
-        if (PlayerRefs.HitPoint.IsHPChanged)
-        {
-            HealthChanged?.Invoke(new(previousHealth, PlayerRefs.HitPoint.CurrentHitPoint));
-        }
+    //     if (PlayerRefs.HitPoint.IsHPChanged)
+    //     {
+    //         HealthChanged?.Invoke(new(previousHealth, PlayerRefs.HitPoint.CurrentHitPoint));
+    //     }
 
-        previousHealth = PlayerRefs.HitPoint.CurrentHitPoint;
-    }
+    //     previousHealth = PlayerRefs.HitPoint.CurrentHitPoint;
+    // }
 
 #endregion
 }

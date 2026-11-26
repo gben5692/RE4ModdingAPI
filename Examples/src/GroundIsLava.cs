@@ -15,7 +15,7 @@ public class GroundIsLava : Plugin
 
     public override void OnUpdate(float deltaTime) // this runs every frame
     {
-        if (Player.CharacterController!.Ground)
+        if (Player.CharacterController!.IsGrounded)
         {
             Player.Health -= 1;
         }
