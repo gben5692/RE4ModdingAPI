@@ -5,7 +5,7 @@ REFramework makes it difficult to subscribe to events and hook internal game met
 
 ### Installation
 1. Download **`csharp-api.zip`** from [REFramework Nightly Releases](https://github.com/praydog/REFramework-nightly/releases) and extract it into your Resident Evil 4 root game folder.
-2. Download `RE4ModdingAPI.dll` from the releases.
+2. Download `RE4ModdingAPI.dll` from the [Releases](https://github.com/gben5692/RE4ModdingAPI/releases).
 3. Place `RE4ModdingAPI.dll` into your `reframework/plugins/managed/` folder.
 
 ### Creating a Mod
