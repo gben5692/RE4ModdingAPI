@@ -8,5 +8,6 @@ public class Plugin
 
     public virtual void OnEnabled() {}
     public virtual void OnUpdate(float deltaTime) {}  
+    public virtual void OnImGuiDraw() {}
     public virtual void OnDisabled() {}
 }

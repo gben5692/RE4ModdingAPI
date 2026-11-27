@@ -6,7 +6,6 @@ public class Game
 {
 #region Internal References
     private static CampaignManager CampaignManager => Singleton.CampaignManager;
-    private static CharacterManager CharacterManager => Singleton.CharacterManager;
 #endregion
 
 #region Properties

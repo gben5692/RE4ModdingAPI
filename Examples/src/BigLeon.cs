@@ -1,7 +1,5 @@
 using RE4ModdingAPI;
-using RE4ModdingAPI.Events.Player;
 using RE4ModdingAPI.Wrappers;
-using REFrameworkNET;
 
 public class BigLeon : Plugin
 {

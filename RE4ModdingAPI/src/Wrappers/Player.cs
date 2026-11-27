@@ -1,7 +1,5 @@
 using chainsaw;
 using RE4ModdingAPI.DataTypes;
-using RE4ModdingAPI.Delegates;
-using RE4ModdingAPI.Events.Player;
 using RE4ModdingAPI.GameObject;
 using via.physics;
 
@@ -44,7 +42,7 @@ public static class Player
         get
         {
             if (PlayerRefs == null || PlayerRefs.BodyUpdater == null || PlayerRefs.BodyUpdater.CharacterController == null)
-            return null;
+            return null!;
 
             return new(PlayerRefs.BodyUpdater.CharacterController);
         }
@@ -225,7 +223,7 @@ public static class Player
     }
 
     /// <summary>
-    /// If the player is in a animation (Grabbing)
+    /// If the player is in a enemy animation (Grabbing)
     /// </summary>
     public static bool IsTargetJacked
     {

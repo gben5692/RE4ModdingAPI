@@ -14,7 +14,7 @@ internal class EntryPoint
     public static void Entry() // Entry point
     {
         API.LogToConsole = true;
-        API.LogInfo("Plugin Loaded!");
+        API.LogInfo("[API] Plugin Loaded!");
         
         OnStart();
     }
@@ -25,16 +25,22 @@ internal class EntryPoint
         OnUpdate(Application.DeltaTime);
     }
 
+    [Callback(typeof(ImGuiDrawUI), CallbackType.Post)]
+    private static void ImGuiDrawCallback()
+    {
+        OnImGuiDraw();
+    }
+
     [PluginExitPoint]
     public static void Exit() // Exit point
     {
-        API.LogInfo("Plugin UnLoaded!");
+        API.LogInfo("[API] Plugin UnLoaded!");
         OnDisabled();
     }
 
     public static void OnStart()
     {
-        API.LogInfo("start called!");
+        API.LogInfo("[API] Start Called!");
         modLoader = new();
         modLoader.LoadPlugins();
     }
@@ -50,7 +56,22 @@ internal class EntryPoint
         }
         catch (Exception ex)
         {
-            API.LogError($"An exception has occured while calling OnUpdate for plugins with the error: {ex}");
+            API.LogError($"[API] An exception has occured while calling OnUpdate for plugins with the error: {ex}");
+        }
+    }
+
+    public static void OnImGuiDraw()
+    {
+        try
+        {
+            foreach (var plugin in modLoader!.LoadedPlugins!)
+            {
+                plugin.OnImGuiDraw();
+            }
+        }
+        catch (Exception ex)
+        {
+            API.LogError($"[API] An exception has occured while calling OnImGuiDraw for plugins with the error: {ex}");
         }
     }
 
@@ -65,11 +86,11 @@ internal class EntryPoint
         }
         catch (Exception ex)
         {
-            API.LogError($"Error in trying to call OnDisabled with the error: {ex}");
+            API.LogError($"[API] Error in trying to call OnDisabled with the error: {ex}");
         }
         
 
         modLoader!.UnloadPlugins();
-        API.LogInfo("disabled called!");
+        API.LogInfo("[API] Disabled called!");
     }
 }

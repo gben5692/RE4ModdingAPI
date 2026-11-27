@@ -10,7 +10,7 @@ internal class ModLoader // this class will handle loading plugins from a folder
 
     public void LoadPlugins()
     {
-        API.LogInfo($"Loading plugins from path: {Path.GetFullPath(PluginsPath)}");
+        API.LogInfo($"[API] Loading plugins from path: {Path.GetFullPath(PluginsPath)}");
 
         try
         {
@@ -32,7 +32,7 @@ internal class ModLoader // this class will handle loading plugins from a folder
                             Plugin? plugin = (Plugin?)Activator.CreateInstance(type);
                             LoadedPlugins.Add(plugin!);
 
-                            API.LogInfo($"Loaded Plugin: {plugin!.Name}, by: {plugin!.Author}, v{plugin!.Version}");
+                            API.LogInfo($"[API] Loaded Plugin: {plugin!.Name}, by: {plugin!.Author}, v{plugin!.Version}");
 
                             plugin.OnEnabled();
                         }
@@ -42,7 +42,7 @@ internal class ModLoader // this class will handle loading plugins from a folder
         }
         catch (Exception ex)
         {
-            API.LogError($"Error in trying to load plugins with the error: {ex}");
+            API.LogError($"[API] Error in trying to load plugins with the error: {ex}");
         }
     }
 
